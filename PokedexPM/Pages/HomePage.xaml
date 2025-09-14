@@ -6,8 +6,25 @@
     
     <VerticalStackLayout Spacing="12">
         <Label Text="¡Atrápalos ya!" FontSize="28" FontAttributes="Bold" />
-        <SearchBar Placeholder="Busca por nombre o #" />
-        <CollectionView ItemsLayout="VerticalGrid,2" />
+        <SearchBar Placeholder="Busca por nombre" 
+                   TextChanged="SearchBar_TextChanged"/>
+        <CollectionView
+            ItemsSource="{Binding FilteredPokemons}"
+            SelectionMode="Single"
+            SelectionChanged="CollectionView_SelectionChanged"
+            ItemsLayout="VerticalGrid,2">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="5" Margin="5" BorderColor="Gray" CornerRadius="10">
+                        <VerticalStackLayout>
+                            <Image Source="{Binding Sprites.FrontDefault}" HeightRequest="80" />
+                            <Label Text="{Binding Name}" HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </VerticalStackLayout>
     
 </ContentPage>
