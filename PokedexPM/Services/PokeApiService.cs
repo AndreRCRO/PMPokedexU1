@@ -26,14 +26,20 @@ namespace PokedexPM.Services
 
         public async Task<List<Pokemon>> GetAllPokemons()
         {
-            string Url = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0";
+            string Url = "https://pokeapi.co/api/v2/pokemon?limit=10&offset=0";
             var response = await _client.GetFromJsonAsync<PokemonListResponse>(Url);
 
-            return response?.Results?.Select(item => new Pokemon
+            var results = response?.Results ?? new List<PokemonListItem>();
+            var pokemons = new List<Pokemon>();
+
+            foreach (var item in results)
             {
-                Name = item.Name,
-                Url = item.Url
-            }).ToList() ?? new List<Pokemon>();
+                var details = await GetPokemonDetailsByName(item.Name);
+                if (details != null)
+                    pokemons.Add(details);
+            }
+
+            return pokemons;
         }
     }
 

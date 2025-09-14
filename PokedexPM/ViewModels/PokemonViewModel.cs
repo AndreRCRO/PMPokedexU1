@@ -13,9 +13,9 @@ namespace PokedexPM.ViewModels
 {
     internal class PokemonViewModel : INotifyPropertyChanged
     {
-        private List<Pokemon> _allPokemons;  
+        private List<Pokemon> _allPokemons = new List<Pokemon>();  
         public List<Pokemon> FilteredPokemons { get; set; }
-        public PokeApiService PokeApiService;
+        public PokeApiService PokeApiService = new PokeApiService(new HttpClient());
 
         public PokemonViewModel()
         {
@@ -38,6 +38,7 @@ namespace PokedexPM.ViewModels
                 FilteredPokemons = _allPokemons
                     .Where(p => p.Name.Contains(search, StringComparison.OrdinalIgnoreCase))
                     .ToList();
+            OnPropertyChanged(nameof(FilteredPokemons));
         }
 
 
