@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PokedexPM.Pages.HomePage"
+             Title="HomePage">
+    
+    <VerticalStackLayout Spacing="12">
+        <Label Text="¡Atrápalos ya!" FontSize="28" FontAttributes="Bold" />
+        <SearchBar Placeholder="Busca por nombre o #" />
+        <CollectionView ItemsLayout="VerticalGrid,2" />
+    </VerticalStackLayout>
+    
+</ContentPage>

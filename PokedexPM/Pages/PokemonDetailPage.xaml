@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PokedexPM.Pages.PokemonDetailPage"
+             Title="PokemonDetailPage">
+    <ScrollView>
+        <VerticalStackLayout>
+            <Image Source="{Binding ImageUrl}" HeightRequest="200" Aspect="AspectFit" />
+            <Label Text="{Binding DisplayName}" FontSize="24" FontAttributes="Bold" />
+            <Label Text="#{Binding PokedexNumber}" />
+            <CollectionView ItemsLayout="HorizontalList" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
