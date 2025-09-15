@@ -2,22 +2,98 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PokedexPM.Pages.PokemonDetailPage"
-             Title="PokemonDetailPage">
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="10">
-            <Image Source="{Binding ImageUrl}" HeightRequest="200" Aspect="AspectFit" />
-            <Label Text="{Binding DisplayName}" FontSize="24" FontAttributes="Bold" />
-            <Label Text="{Binding PokedexNumber, StringFormat='#{0}'}" FontSize="18" />
-            <CollectionView ItemsSource="{Binding Types}" ItemsLayout="HorizontalList">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame Padding="5" Margin="2" CornerRadius="10" BackgroundColor="LightGray">
-                            <Label Text="{Binding .}" HorizontalOptions="Center" VerticalOptions="Center" />
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </VerticalStackLayout>
-        </ScrollView>
+             Title="Detalle">
 
+    <ContentPage.Resources>
+        <Color x:Key="TextMain">#F2F5F9</Color>
+        <Color x:Key="TextSub">#B8C2CF</Color>
+        <Color x:Key="CardBorder">#232B36</Color>
+
+        <Style TargetType="Frame" x:Key="Card">
+            <Setter Property="Padding" Value="14"/>
+            <Setter Property="Margin" Value="0,8"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="HasShadow" Value="True"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#141B24" Offset="0"/>
+                        <GradientStop Color="#0F151D" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderColor" Value="{StaticResource CardBorder}"/>
+            <Setter Property="Shadow">
+                <Setter.Value>
+                    <Shadow Brush="#50000000" Offset="0,4" Radius="12" Opacity="0.35"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Frame" x:Key="Chip">
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="HasShadow" Value="False"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#30FFFFFF" Offset="0"/>
+                        <GradientStop Color="#10FFFFFF" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderColor" Value="#25FFFFFF"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*" BackgroundColor="#0E141B">
+        <!-- Header fijo con gradiente suave -->
+        <Grid Row="0">
+            <Border StrokeThickness="0" Padding="16,24">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#1E2632" Offset="0"/>
+                        <GradientStop Color="#151C26" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto">
+                    <Label Text="{Binding DisplayName}"
+                           FontSize="28"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextMain}"/>
+
+                    <Label Grid.Column="1"
+                           Text="{Binding PokedexNumber, StringFormat='#{0}'}"
+                           FontSize="20"
+                           TextColor="{StaticResource TextSub}"/>
+
+                    <Image Grid.Row="1" Grid.ColumnSpan="2"
+                           Source="{Binding ImageUrl}"
+                           HeightRequest="220"
+                           Margin="0,12,0,0"
+                           Aspect="AspectFit"/>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Contenido scrollable -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,20" Spacing="12">
+                <!-- Chips de tipos (sin converters, mismos bindings) -->
+                <CollectionView ItemsSource="{Binding Types}" ItemsLayout="HorizontalList" SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Style="{StaticResource Chip}">
+                                <Label Text="{Binding .}" TextColor="{StaticResource TextMain}" FontAttributes="Bold"/>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+
+                <!-- Puedes agregar más secciones aquí con el mismo estilo Card -->
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

@@ -2,17 +2,76 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PokedexPM.Controls.PokemonCard">
-    
+
+    <!-- Recursos locales (solo XAML) -->
+    <ContentView.Resources>
+        <Color x:Key="CardBg">#151B23</Color>
+        <Color x:Key="CardBorder">#232B36</Color>
+        <Color x:Key="TextMain">#F2F5F9</Color>
+        <Color x:Key="TextSub">#9FB3C8</Color>
+
+        <Style TargetType="Frame" x:Key="CardFrame">
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="8,6"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="HasShadow" Value="True"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#1C2430" Offset="0"/>
+                        <GradientStop Color="#121821" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderColor" Value="{StaticResource CardBorder}"/>
+            <Setter Property="Shadow">
+                <Setter.Value>
+                    <Shadow Brush="#50000000" Offset="0,4" Radius="12" Opacity="0.35"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Label" x:Key="Title16">
+            <Setter Property="TextColor" Value="{StaticResource TextMain}"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="LineBreakMode" Value="TailTruncation"/>
+        </Style>
+
+        <Style TargetType="Frame" x:Key="Chip">
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="HasShadow" Value="False"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#30FFFFFF" Offset="0"/>
+                        <GradientStop Color="#10FFFFFF" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderColor" Value="#25FFFFFF"/>
+        </Style>
+    </ContentView.Resources>
+
     <Frame Style="{StaticResource CardFrame}">
-        <Grid ColumnDefinitions="Auto,*">
-            <Image Source="{Binding ImageUrl}" WidthRequest="72" HeightRequest="72" Aspect="AspectFit" />
-            <VerticalStackLayout>
-                <Label Text="{Binding DisplayName}" FontAttributes="Bold" />
-                <HorizontalStackLayout Spacing="4">
-                    <Label Text="{Binding Types[0]}" FontSize="12" />
-                </HorizontalStackLayout>
-            </VerticalStackLayout>
-        </Grid>
+        <VerticalStackLayout Spacing="6"
+                         VerticalOptions="Center"
+                         HorizontalOptions="Center">
+            <!-- Nombre arriba -->
+            <Label Text="{Binding Name}"
+               Style="{StaticResource Title16}"
+               HorizontalOptions="Center"
+               HorizontalTextAlignment="Center"/>
+
+            <!-- Imagen abajo -->
+            <Image Source="{Binding Sprites.FrontDefault}"
+               WidthRequest="84"
+               HeightRequest="84"
+               Aspect="AspectFit"
+               HorizontalOptions="Center"/>
+        </VerticalStackLayout>
     </Frame>
-    
+
+
 </ContentView>

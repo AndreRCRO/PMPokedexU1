@@ -1,30 +1,87 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:PokedexPM.Controls"
              x:Class="PokedexPM.Pages.HomePage"
-             Title="HomePage">
-    
-    <VerticalStackLayout Spacing="12">
-        <Label Text="¡Atrápalos ya!" FontSize="28" FontAttributes="Bold" />
-        <SearchBar Placeholder="Busca por nombre" 
-                   TextChanged="SearchBar_TextChanged"/>
-        <CollectionView
-            ItemsSource="{Binding FilteredPokemons}"
-            SelectionMode="Single"
-            SelectionChanged="CollectionView_SelectionChanged"
-            ItemsLayout="VerticalGrid,2">
+             Title="Home">
 
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Padding="5" Margin="5" BorderColor="Gray" CornerRadius="10">
-                        <VerticalStackLayout>
-                            <Image Source="{Binding Sprites.FrontDefault}" HeightRequest="80" />
-                            <Label Text="{Binding Name}" HorizontalOptions="Center" />
-                        </VerticalStackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </VerticalStackLayout>
-    
+    <!-- Fondo con gradiente (solo XAML) -->
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#121821" Offset="0"/>
+            <GradientStop Color="#0E141B" Offset="1"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <ContentPage.Resources>
+        <Color x:Key="TextMain">#F2F5F9</Color>
+        <Color x:Key="TextSub">#9FB3C8</Color>
+
+        <Style TargetType="Label" x:Key="H1">
+            <Setter Property="TextColor" Value="{StaticResource TextMain}"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+        </Style>
+
+        <Style TargetType="Label" x:Key="Sub">
+            <Setter Property="TextColor" Value="{StaticResource TextSub}"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+
+        <!-- OJO: SearchBar no tiene CornerRadius. Lo estilizamos y lo redondeamos envolviéndolo en un Frame -->
+        <Style TargetType="SearchBar" x:Key="SearchStyled">
+            <Setter Property="PlaceholderColor" Value="#8CA0B3"/>
+            <Setter Property="TextColor" Value="{StaticResource TextMain}"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <!-- el color lo pone el Frame -->
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="HeightRequest" Value="44"/>
+            <Setter Property="CancelButtonColor" Value="#9FB3C8"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,*" Padding="16">
+        <!-- Títulos -->
+        <VerticalStackLayout Spacing="2" Grid.Row="0">
+            <Label Text="¡Atrápalos ya!" Style="{StaticResource H1}"/>
+            <Label Text="Explora y busca por nombre" Style="{StaticResource Sub}"/>
+        </VerticalStackLayout>
+
+        <!-- Buscador: envuelto en Frame para esquinas redondeadas -->
+        <Frame Grid.Row="1"
+               Padding="0"
+               Margin="0,8,0,8"
+               CornerRadius="12"
+               BackgroundColor="#151B23"
+               BorderColor="#232B36"
+               HasShadow="False">
+            <SearchBar Placeholder="Busca por nombre"
+                       Style="{StaticResource SearchStyled}"
+                       TextChanged="SearchBar_TextChanged"/>
+        </Frame>
+
+        <!-- Grid -->
+        <RefreshView Grid.Row="2" IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
+            <CollectionView ItemsSource="{Binding FilteredPokemons}"
+                            SelectionMode="Single"
+                            SelectionChanged="CollectionView_SelectionChanged">
+                <CollectionView.EmptyView>
+                    <Grid Padding="24" RowDefinitions="Auto,Auto">
+                        <Label Text="Sin resultados" FontSize="18" TextColor="#8CA0B3"/>
+                        <Label Grid.Row="1" Text="Prueba con otro nombre" TextColor="{StaticResource TextSub}"/>
+                    </Grid>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="2" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <controls:PokemonCard BindingContext="{Binding .}" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
 </ContentPage>
