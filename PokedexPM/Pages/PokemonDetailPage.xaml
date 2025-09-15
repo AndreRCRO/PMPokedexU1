@@ -3,12 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PokedexPM.Pages.PokemonDetailPage"
              Title="PokemonDetailPage">
-    <ScrollView>
-        <VerticalStackLayout>
+    <<ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="10">
             <Image Source="{Binding ImageUrl}" HeightRequest="200" Aspect="AspectFit" />
             <Label Text="{Binding DisplayName}" FontSize="24" FontAttributes="Bold" />
-            <Label Text="#{Binding PokedexNumber}" />
-            <CollectionView ItemsLayout="HorizontalList" />
+            <Label Text="{Binding PokedexNumber, StringFormat='#{0}'}" FontSize="18" />
+            <CollectionView ItemsSource="{Binding Types}" ItemsLayout="HorizontalList">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="5" Margin="2" CornerRadius="10" BackgroundColor="LightGray">
+                            <Label Text="{Binding .}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </VerticalStackLayout>
-    </ScrollView>
+        </ScrollView>
+
 </ContentPage>

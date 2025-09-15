@@ -20,6 +20,9 @@ namespace PokedexPM.Models
 
         [JsonPropertyName("url")]
         public string Url { get; set; }
+
+        [JsonPropertyName("id")]
+        public int Id { get; set; }
     }
 
     public class Sprite
@@ -44,6 +47,6 @@ namespace PokedexPM.Models
         public string Name { get; set; }
 
         [JsonPropertyName("url")]
-        public int Url { get; set; }
+        public string Url { get; set; }
     }
 }
