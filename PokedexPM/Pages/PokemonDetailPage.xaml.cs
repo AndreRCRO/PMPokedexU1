@@ -8,7 +8,7 @@ public partial class PokemonDetailPage : ContentPage
 
 	public PokemonDetailPage(Pokemon selectedPokemon)
 	{
-		InitializeComponent();
+        InitializeComponent();
         BindingContext = new PokemonDetailViewModel(selectedPokemon);
     }
 }

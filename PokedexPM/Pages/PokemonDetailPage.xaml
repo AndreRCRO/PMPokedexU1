@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PokedexPM.Pages.PokemonDetailPage"
              Title="PokemonDetailPage">
-    <<ScrollView>
+    <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="10">
             <Image Source="{Binding ImageUrl}" HeightRequest="200" Aspect="AspectFit" />
             <Label Text="{Binding DisplayName}" FontSize="24" FontAttributes="Bold" />

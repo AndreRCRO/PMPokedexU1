@@ -12,6 +12,7 @@
         <Tab Title="Pokédex" Icon="icons/pokeball.png">
             <ShellContent Title="Inicio" ContentTemplate="{DataTemplate Pages:HomePage}" />
             <ShellContent Title="Lista" ContentTemplate="{DataTemplate Pages:PokemonListPage}" />
+            
         </Tab>
     </TabBar>
 
